@@ -9,7 +9,12 @@ const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const stripe = require('stripe')(STRIPE_SECRET_KEY);
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+app.options('*', cors());
 app.use(express.json());
 
 app.post('/api/create-link-token', async (req, res) => {
